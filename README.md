@@ -17,13 +17,13 @@ support through empathetic conversation.
 ### What Makes Deha Different
 
 -   **Story-Based Response Format** -- Every response is told as a warm,
-    relatable story instead of robotic or clinical text\
+    relatable story instead of robotic or clinical text
 -   **Intelligent Crisis Detection** -- Automatically detects severe
-    distress and escalates with real crisis resources\
+    distress and escalates with real crisis resources
 -   **Evidence-Based Coping Mechanisms** -- Trained on CBT, mindfulness,
-    and validated strategies formatted as stories\
+    and validated strategies formatted as stories
 -   **Severity Classification Framework** -- Knows when to offer light
-    support vs. immediate professional escalation\
+    support vs. immediate professional escalation
 -   **RAG Architecture** -- Retrieves relevant stories & techniques from
     a specialized vector database
 
