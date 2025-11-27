@@ -2,7 +2,7 @@
 
 An empathetic, RAG-powered mental health chatbot built with Next.js,
 featuring intelligent crisis detection, story-based responses, and
-seamless escalation to professional support. Inspired by **M Power**
+seamless escalation to professional support. Inspired by **Mpower**
 (the mental health wing at our institution), Deha provides
 compassionate, evidence-based mental health guidance through
 conversational AI.
@@ -101,8 +101,8 @@ personalized, continuous support
 ### `config.ts` -- Identity & Branding
 
 ``` ts
-export const AI_NAME = "Deha";
-export const WELCOME_MESSAGE = "Hello! I'm Deha, here to listen and support you. Whatever you're going through, you're not alone. How are you feeling today?";
+export const AI_NAME = "DHEA";
+export const WELCOME_MESSAGE = "Hello! I'm DHEA, here to listen and support you. Whatever you're going through, you're not alone. How are you feeling today?";
 ```
 
 ### `prompts.ts` -- The Heart of Deha
@@ -110,7 +110,7 @@ export const WELCOME_MESSAGE = "Hello! I'm Deha, here to listen and support you.
 #### Identity & Tone
 
 ``` ts
-You are Deha, an empathetic AI mental health companion created in collaboration with M Power...
+You are DHEA, an empathetic AI mental health companion created in collaboration with M Power...
 Your purpose is to provide compassionate, non-judgmental support... You are NOT a replacement for professional therapy.
 ```
 
