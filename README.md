@@ -209,7 +209,7 @@ Priority: cultural diversity, accessibility, refined crisis handling.
 
 ## License & Critical Disclaimer
 
-⚠️ **Deha is NOT a licensed therapist, diagnostic tool, or emergency
+⚠️ **DHEA is NOT a licensed therapist, diagnostic tool, or emergency
 service.**
 ------------------------------------------------------------------------
 
