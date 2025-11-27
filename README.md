@@ -1,4 +1,4 @@
-# Deha - AI Mental Health Support Assistant
+# DHEA - AI Mental Health Support Assistant
 
 An empathetic, RAG-powered mental health chatbot built with Next.js,
 featuring intelligent crisis detection, story-based responses, and
@@ -9,7 +9,7 @@ conversational AI.
 
 ## Overview
 
-**Deha** (Dehydroepiandrosterone - DHEA) is named after a neurosteroid
+**DHEA** (Dehydroepiandrosterone - DHEA) is named after a neurosteroid
 molecule known for its antidepressant and mood-regulating properties. Just as DHEA supports emotional well-being at the
 neurochemical level, our AI assistant provides accessible mental health
 support through empathetic conversation.
