@@ -1,246 +1,219 @@
-# Mpower
+# Deha - AI Mental Health Support Assistant
 
-A customizable AI chatbot assistant built with Next.js, featuring web search capabilities, vector database integration, and content moderation. This repository provides a complete foundation for deploying your own AI assistant with minimal technical knowledge required.
+An empathetic, RAG-powered mental health chatbot built with Next.js,
+featuring intelligent crisis detection, story-based responses, and
+seamless escalation to professional support. Inspired by **M Power**
+(the mental health wing at our institution), Deha provides
+compassionate, evidence-based mental health guidance through
+conversational AI.
 
 ## Overview
 
-MyAI3 is an AI-powered chatbot that can:
+**Deha** (Dehydroepiandrosterone - DHEA) is named after a neurosteroid
+molecule known for its antidepressant and mood-regulating properties. Just as DHEA supports emotional well-being at the
+neurochemical level, our AI assistant provides accessible mental health
+support through empathetic conversation.
 
-- Answer questions using advanced language models
-- Search the web for up-to-date information
-- Search a vector database (Pinecone) for stored knowledge
-- Moderate content to ensure safe interactions
-- Provide citations and sources for its responses
+### What Makes Deha Different
 
-The application is designed to be easily customizable without deep technical expertise. Most changes you'll want to make can be done in just two files: `config.ts` and `prompts.ts`.
+-   **Story-Based Response Format** -- Every response is told as a warm,
+    relatable story instead of robotic or clinical text\
+-   **Intelligent Crisis Detection** -- Automatically detects severe
+    distress and escalates with real crisis resources\
+-   **Evidence-Based Coping Mechanisms** -- Trained on CBT, mindfulness,
+    and validated strategies formatted as stories\
+-   **Severity Classification Framework** -- Knows when to offer light
+    support vs. immediate professional escalation\
+-   **RAG Architecture** -- Retrieves relevant stories & techniques from
+    a specialized vector database
 
-This application is deployed on Vercel. After making changes to `config.ts` or `prompts.ts`, commit and push your changes to trigger a new deployment.
+## Core Capabilities
 
-## Key Files to Customize
+### 1. Empathetic Conversation
 
-### `config.ts` - Application Configuration
+Deha speaks like a trusted friend or counselor -- warm, narrative, and
+deeply human.
 
-This is the **primary file** you'll edit to customize your AI assistant. Located in the root directory, it contains:
+### 2. Mental Health Support Areas
 
-- **AI Identity**: `AI_NAME` and `OWNER_NAME` - Change these to personalize your assistant
-- **Welcome Message**: `WELCOME_MESSAGE` - The greeting users see when they first open the chat
-- **UI Text**: `CLEAR_CHAT_TEXT` - The label for the "New Chat" button
-- **Moderation Messages**: Custom messages shown when content is flagged (sexual content, harassment, hate speech, violence, self-harm, illegal activities)
-- **Model Configuration**: `MODEL` - The AI model being used (currently set to OpenAI's GPT-5-mini)
-- **Vector Database Settings**: `PINECONE_TOP_K` and `PINECONE_INDEX_NAME` - Settings for your knowledge base search
+-   Stress & anxiety management
+-   Depression awareness & coping
+-   Emotional regulation
+-   Self-care & wellness
+-   Sleep hygiene
+-   Relationship & social challenges
 
-**Example customization:**
+### 3. Crisis Intervention
 
-```typescript
-export const AI_NAME = "Your Assistant Name";
-export const OWNER_NAME = "Your Name";
-export const WELCOME_MESSAGE = `Hello! I'm ${AI_NAME}, ready to help you.`;
+When suicidal ideation, self-harm, or severe symptoms are detected,
+Deha: 1. Acknowledges the user's courage 2. Expresses genuine concern 3.
+Immediately provides **Mpower** contact details + local/national
+hotlines 4. Encourages emergency help 5. Remains supportive and
+non-judgmental
+
+### 4. Contextual Memory
+
+Powered by **Pinecone** vector database for: - Retrieving relevant
+coping stories - Remembering conversation context - Delivering
+personalized, continuous support
+
+## Technical Architecture
+
+### Tech Stack
+
+-   **Framework**: Next.js 14+ (App Router)
+-   **Language**: TypeScript
+-   **UI**: React + Tailwind CSS + shadcn/ui
+-   **AI Model**: OpenAI GPT (configurable)
+-   **Vector DB**: Pinecone (RAG)
+-   **Optional Search**: Exa API
+-   **Deployment**: Vercel
+-   **Safety**: OpenAI Moderation API
+
+### Project Structure
+
+    Deha/
+    ├── app/
+    │   ├── api/chat/route.ts          # Main chat + severity logic
+    │   ├── api/chat/tools/
+    │   │   ├── search-vector-database.ts
+    │   │   └── web-search.ts
+    │   ├── page.tsx                   # Chat UI
+    │   ├── parts/                     # UI components
+    │   └── terms/                     # Disclaimer page
+    ├── components/
+    │   ├── ai-elements/
+    │   ├── messages/
+    │   └── ui/
+    ├── lib/
+    │   ├── moderation.ts
+    │   ├── pinecone.ts
+    │   ├── sources.ts
+    │   └── utils.ts
+    ├── types/
+    ├── config.ts                      # ⭐ Main configuration
+    ├── prompts.ts                     # ⭐ Core prompt engineering
+    ├── .env.local
+    └── package.json
+
+## Key Configuration & Prompts
+
+### `config.ts` -- Identity & Branding
+
+``` ts
+export const AI_NAME = "Deha";
+export const WELCOME_MESSAGE = "Hello! I'm Deha, here to listen and support you. Whatever you're going through, you're not alone. How are you feeling today?";
 ```
 
-### `prompts.ts` - AI Behavior and Instructions
+### `prompts.ts` -- The Heart of Deha
 
-This file controls **how your AI assistant behaves and responds**. Located in the root directory, it contains:
+#### Identity & Tone
 
-- **Identity Prompt**: Who the AI is and who created it
-- **Tool Calling Prompt**: Instructions for when to search the web or database
-- **Tone & Style**: How the AI should communicate (friendly, helpful, educational)
-- **Guardrails**: What the AI should refuse to discuss
-- **Citation Rules**: How to cite sources in responses
-- **Course Context**: Domain-specific instructions (currently mentions course syllabus)
-
-The prompts are modular, so you can edit individual sections without affecting others. The `SYSTEM_PROMPT` combines all these sections.
-
-**Example customization:**
-
-```typescript
-export const TONE_STYLE_PROMPT = `
-- Maintain a professional, business-focused tone.
-- Use clear, concise language suitable for executives.
-- Provide actionable insights and recommendations.
-`;
+``` ts
+You are Deha, an empathetic AI mental health companion created in collaboration with M Power...
+Your purpose is to provide compassionate, non-judgmental support... You are NOT a replacement for professional therapy.
 ```
 
-## Project Structure
+#### Story-Based Style (Critical)
 
-```text
-myAI3/
-├── app/                          # Next.js application files
-│   ├── api/chat/                 # Chat API endpoint
-│   │   ├── route.ts              # Main chat handler
-│   │   └── tools/                 # AI tools (web search, vector search)
-│   ├── page.tsx                  # Main chat interface (UI)
-│   ├── parts/                    # UI components
-│   └── terms/                    # Terms of Use page
-├── components/                    # React components
-│   ├── ai-elements/              # AI-specific UI components
-│   ├── messages/                 # Message display components
-│   └── ui/                       # Reusable UI components
-├── lib/                          # Utility libraries
-│   ├── moderation.ts             # Content moderation logic
-│   ├── pinecone.ts               # Vector database integration
-│   ├── sources.ts                # Source/citation handling
-│   └── utils.ts                  # General utilities
-├── types/                        # TypeScript type definitions
-├── config.ts                     # ⭐ MAIN CONFIGURATION FILE
-├── prompts.ts                    # ⭐ AI BEHAVIOR CONFIGURATION
-└── package.json                  # Dependencies and scripts
+``` ts
+* Respond in a warm, conversational, story-like format
+* Use narrative structures: "I once heard about someone who...", "Many people find that..."
+* Avoid clinical jargon — use everyday language
+* Share relatable analogies and metaphors
+* Maintain hope while validating feelings
 ```
 
-## Important Files Explained
+#### Crisis Detection & Escalation
 
-### Core Application Files
+``` ts
+SEVERE CONDITIONS → Immediate escalation (suicidal ideation, self-harm, psychosis, etc.)
+1. Acknowledge courage
+2. Provide M Power contact + crisis hotlines
+3. Encourage emergency help
+```
 
-- **`app/api/chat/route.ts`**: The main API endpoint that handles chat requests. It processes messages, checks moderation, and calls the AI model with tools.
+#### Guardrails & Ethics
 
-- **`app/page.tsx`**: The main user interface. This is what users see and interact with. It handles the chat interface, message display, and user input.
+``` ts
+You MUST refuse to:
+• Diagnose conditions
+• Prescribe medication
+• Replace therapy
+• Promise to "cure" anything
+Always encourage professional help when needed.
+```
 
-- **`app/api/chat/tools/web-search.ts`**: Enables the AI to search the web using Exa API. You can modify search parameters here (currently returns 3 results).
+## Data Collection & Training
 
-- **`app/api/chat/tools/search-vector-database.ts`**: Enables the AI to search your Pinecone vector database for stored knowledge.
+Special thanks to **Mpower** for providing anonymized case studies,
+evidence-based protocols, and crisis guidelines.
 
-### UI Components
+All vector database entries are transformed into **story format**:
 
-- **`components/messages/message-wall.tsx`**: Displays the conversation history
-- **`components/messages/assistant-message.tsx`**: Renders AI responses, including tool calls and reasoning
-- **`components/messages/tool-call.tsx`**: Shows when the AI is using tools (searching web, etc.)
-- **`components/ai-elements/response.tsx`**: Formats and displays AI text responses with markdown support
+**Raw → Story Example**
 
-### Library Files
+    Before: "Deep breathing: 4-7-8 technique..."
+    After:  "When anxiety starts to creep in, many people find comfort in a simple breathing technique... Imagine your breath as a gentle wave..."
 
-- **`lib/moderation.ts`**: Handles content moderation using OpenAI's moderation API. Checks user messages for inappropriate content before processing.
+## Setup & Deployment
 
-- **`lib/pinecone.ts`**: Manages connections to Pinecone vector database. Handles searching your knowledge base.
+### Environment Variables (`.env.local`)
 
-- **`lib/sources.ts`**: Processes search results and formats them for the AI, including citation handling.
+``` env
+OPENAI_API_KEY=your_key
+PINECONE_API_KEY=your_key
+EXA_API_KEY=your_key (optional)
+```
 
-### Configuration Files
+### Pinecone Setup
 
-- **`env.template`**: Template for environment variables. These need to be configured in your Vercel project settings.
+1.  Create index (dimension: 1536, metric: cosine)
+2.  Chunk your story-formatted stories
+3.  Embed with Llama-index and upsert
 
-- **`app/terms/page.tsx`**: Terms of Use page. Uses `OWNER_NAME` from `config.ts`. Update this file if you need to modify legal terms.
+### Deploy to Vercel
 
-## Environment Setup (Vercel)
+``` bash
+git add .
+git commit -m "Initial commit"
+git push origin main
+```
 
-Configure environment variables in your Vercel project settings (Settings → Environment Variables). Add the following:
-
-- `OPENAI_API_KEY` - Required for AI model and moderation
-- `EXA_API_KEY` - Optional, for web search functionality
-- `PINECONE_API_KEY` - Optional, for vector database search
-
-**Where to get API keys:**
-
-- **OpenAI**: <https://platform.openai.com/api-keys> (required)
-- **Exa**: <https://dashboard.exa.ai/> (optional)
-- **Pinecone**: <https://app.pinecone.io/> (optional)
-
-**Note**: Only `OPENAI_API_KEY` is strictly required. The others enable additional features.
+→ Connect repo in Vercel → Add env vars → Deploy!
 
 ## Customization Guide
 
-### Changing the AI's Name and Identity
+-   Change name/tone → `config.ts`
+-   Adjust crisis sensitivity → `prompts.ts` →
+    `SEVERITY_ASSESSMENT_PROMPT`
+-   Add new coping stories → embed → upsert to Pinecone
 
-1. Open `config.ts`
-2. Modify `AI_NAME` and `OWNER_NAME`
-3. Update `WELCOME_MESSAGE` if desired
-4. Commit and push changes to trigger a new Vercel deployment
+## Safety & Ethics
 
-### Adjusting AI Behavior
+-   All inputs moderated via OpenAI Moderation API
+-   No permanent conversation storage
+-   Clear disclaimer on every session
+-   Full compliance with mental health AI best practices
 
-1. Open `prompts.ts`
-2. Edit the relevant prompt section:
-   - `TONE_STYLE_PROMPT` - Change communication style
-   - `GUARDRAILS_PROMPT` - Modify safety rules
-   - `TOOL_CALLING_PROMPT` - Adjust when tools are used
-   - `CITATIONS_PROMPT` - Change citation format
-3. Commit and push changes to trigger a new Vercel deployment
+## Features
 
-### Customizing Moderation Messages
+-   [ ] Mood tracking & insights
+-   [ ] Direct integration with campus counseling
+-   [ ] React Native mobile app
 
-1. Open `config.ts`
-2. Find the `MODERATION_DENIAL_MESSAGE_*` constants
-3. Update the messages to match your brand voice
-4. These messages appear when content is flagged
+## Contributing
 
-### Changing the AI Model
+Mental health professionals, students, and developers are welcome!\
+Priority: cultural diversity, accessibility, refined crisis handling.
 
-1. Open `config.ts`
-2. Modify the `MODEL` export (line 4)
-3. Available models depend on your AI SDK provider
-4. Update API keys in `.env.local` if switching providers
+## License & Critical Disclaimer
 
-### Adding or Removing Tools
+⚠️ **Deha is NOT a licensed therapist, diagnostic tool, or emergency
+service.**
+------------------------------------------------------------------------
 
-Tools are located in `app/api/chat/tools/`. To add a new tool:
+**Built with ❤️ for mental health awareness and accessible support**
 
-1. Create a new file in `app/api/chat/tools/`
-2. Import and add it to `app/api/chat/route.ts` in the `tools` object
-3. Add UI display logic in `components/messages/tool-call.tsx`
-4. See `AGENTS.md` for more technical details
-
-## Architecture Overview
-
-The application follows a simple request-response flow:
-
-1. **User sends message** → `app/page.tsx` (UI)
-2. **Message sent to API** → `app/api/chat/route.ts`
-3. **Content moderation check** → `lib/moderation.ts`
-4. **AI processes with tools** → Model uses web search and/or vector search as needed
-5. **Response streamed back** → UI displays response in real-time
-
-The AI can autonomously decide to:
-
-- Answer directly
-- Search the web for current information
-- Search your vector database for stored knowledge
-- Combine multiple sources
-
-All responses include citations when sources are used.
-
-## Troubleshooting
-
-### AI not responding
-
-- Verify `OPENAI_API_KEY` is set correctly in Vercel environment variables
-- Check browser console for error messages
-- Ensure the API key has sufficient credits/quota
-- Check Vercel deployment logs for errors
-
-### Web search not working
-
-- Verify `EXA_API_KEY` is set in Vercel environment variables
-- Check Exa API dashboard for usage limits
-- Tool will gracefully fail if API key is missing
-
-### Vector search not working
-
-- Verify `PINECONE_API_KEY` is set in Vercel environment variables
-- Check that `PINECONE_INDEX_NAME` in `config.ts` matches your Pinecone index
-- Ensure your Pinecone index exists and has data
-
-### Deployment issues
-
-- Check Vercel deployment logs for build errors
-- Verify all environment variables are set in Vercel project settings
-- Ensure your Vercel project is connected to the correct Git repository
-
-## Next Steps
-
-1. **Customize branding**: Update `config.ts` with your name and AI assistant name
-
-2. **Adjust prompts**: Modify `prompts.ts` to match your use case and tone
-
-3. **Set up knowledge base**: Configure Pinecone and upload your documents
-
-4. **Test moderation**: Verify moderation messages match your needs
-
-5. **Deploy**: Build and deploy to your hosting platform (Vercel, AWS, etc.)
-
-## Support
-
-For technical questions about tool integration, see `AGENTS.md`.
-
-For deployment issues, check the Vercel deployment logs and browser console for error messages.
-
----
-
-**Remember**: Most customization happens in `config.ts` and `prompts.ts`. Start there!
+*"Just as DHEA supports the brain's neurochemistry, Deha supports your
+emotional well-being through compassionate conversation."*
