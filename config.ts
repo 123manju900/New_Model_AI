@@ -3,6 +3,13 @@ import { wrapLanguageModel, extractReasoningMiddleware } from "ai";
 
 export const MODEL = openai('gpt-4.1');
 
+// ---------------------------------------------------------------------------
+// EMERGENCY CONTACT VARIABLES
+// ---------------------------------------------------------------------------
+
+export const EMERGENCY_EMAIL = "mumbai.cell@abet.co.in";
+export const EMERGENCY_PHONE = "+91 99682 16203";
+
 function getDateAndTime(): string {
     const now = new Date();
     const dateStr = now.toLocaleDateString('en-US', {
@@ -123,8 +130,4 @@ export const PINECONE_TOP_K = 40;
 export const PINECONE_INDEX_NAME = "mpower";
 
 // ---------------------------------------------------------------------------
-// EMERGENCY CONTACT VARIABLES (used in prompts.ts)
-// ---------------------------------------------------------------------------
 
-export const EMERGENCY_EMAIL = "mumbai.cell@abet.co.in";
-export const EMERGENCY_PHONE = "+91 99682 16203";
